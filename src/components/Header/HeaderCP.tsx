@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "../../../public/img/logo.jpg";
+import logo from "public/img/logo.jpg";
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -10,7 +10,7 @@ import Cart from './Cart/Cart';
 export default function HeaderCP() {
   return (
     <div className="h-[100px] flex justify-between items-center">
-      <Link href={'/'}><Image src={logo} alt="Logo" width={100} title="Logo" priority={true} /></Link>
+      <Link href={'/'}><Image src='/img/logo.jpg' alt="Logo" width={100} title="Logo" height={100} /></Link>
       <h1 className='text-[2rem]'>Kitchen Shop</h1>
       <div className="flex items-center gap-3">
         <Link href={'/orders_history'}>
