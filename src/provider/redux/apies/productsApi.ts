@@ -7,7 +7,6 @@ interface AddProductArgs {
   price: number;
   rating: string;
   description: string;
-  // count: number;
   img: string[];
 }
 
@@ -41,12 +40,20 @@ export const productsApi = createApi({
         return { url };
       },
       providesTags: (result) =>
-      result
-        ? [
+        result
+          ? [
             ...result.map(({ id }: any) => ({ type: 'Products' as const, id })),
             { type: 'Products', id: 'LIST' },
           ]
-        : [{ type: 'Products', id: 'LIST' }],
+          : [{ type: 'Products', id: 'LIST' }],
+    }),
+    getProduct: builder.query<Product, string>({
+      query: (id) => `products/${id}`,
+
+      providesTags: (result) =>
+        result
+          ? [{ type: 'Products' as const, id: result.id }]
+          : [{ type: 'Products', id: 'LIST' }],
     }),
 
     addProduct: builder.mutation<string, AddProductArgs>({
@@ -74,7 +81,7 @@ export const productsApi = createApi({
       invalidatesTags: ["Products"],
     }),
   }),
-  
+
 });
 
 export const {
@@ -82,5 +89,6 @@ export const {
   useAddProductMutation,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useGetProductQuery
 } = productsApi;
 

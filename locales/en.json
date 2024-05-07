@@ -1,0 +1,75 @@
+{
+  "Index": {
+    "loading": "Loading...",
+    "notProducts": "There are no products",
+    "seeAll": "See all"
+  },
+  "langSwitcher": {
+    "en": "EN"
+  },
+
+  "MenuNav": {
+    "": "Home",
+    "products": "Products"
+  },
+  "sidebar": {
+    "price": "Price",
+    "from": "from",
+    "to": "to",
+    "category": "Category",
+    "categoryOptions": {
+      "all": "All",
+      "chairs": "Chairs",
+      "tables": "Tables",
+      "knives": "Knives",
+      "spoons": "Spoons",
+      "teapots": "Teapots"
+    },
+    "sorting": "Sorting",
+    "sortingOptions": {
+      "default": "Default",
+      "asc": "Ascending",
+      "desc": "Descending"
+    }
+  },
+  "productsPage": {
+    "search": "Search..."
+  },
+  "productCard": {
+    "price": "Price",
+    "notFound": "Product not found",
+    "category": "Category",
+    "description": "Description",
+    "addToCart": "To cart",
+    "removeFromCart": "Remove from cart",
+    "add": "To"
+  },
+  "signInForm": {
+    "title": "Sign In Form",
+    "email": "Email",
+    "password": "Password",
+    "submitButton": "Sign In"
+  },
+  "signUpForm": {
+    "title": "Sign Up Form",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "phone": "Phone",
+    "submitButton": "Sign Up"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Cart is empty",
+    "totalPrice": "Total price",
+    "totalProductPrice": "Total product price",
+    "count": "Count",
+    "remove": "Remove",
+    "order": "Order",
+    "orderSuccess": "Order success",
+    "orderError": "Order error! Try again later",
+    "backToProducts": "Back to products"
+  }
+
+}

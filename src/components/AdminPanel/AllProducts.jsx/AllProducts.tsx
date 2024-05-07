@@ -1,12 +1,14 @@
+'use client'
 import { Button, message, Tag, Typography } from "antd";
 import { useGetProductsQuery, useDeleteProductMutation, useUpdateProductMutation } from "@/provider/redux/apies/productsApi";
 import { useEffect, useState } from "react";
-import { UpdatedProductData } from "@/Types/types";
+import { Product, UpdatedProductData } from "@/Types/types";
 import '../../ui/ProductCard/product_card.css'
+import ProductSkeleton from "@/components/ui/Skeletons/ProductSkeleton";
 
 export default function AllProducts(): JSX.Element {
   const [imgPreview, setImgPreview] = useState<string[] | []>([]);
-  const { data: products = [], isLoading } = useGetProductsQuery({});
+  const { data: products = [], isLoading: allProductsIsLoading } = useGetProductsQuery({});
   const [deleteProduct] = useDeleteProductMutation();
   const [updateProduct, { isError: updateProductIsError, error, isSuccess: updateProductSuccess }] = useUpdateProductMutation();
   const [updateProductId, setUpdateProductId] = useState<string | null>('');
@@ -24,7 +26,7 @@ export default function AllProducts(): JSX.Element {
     } else if (updateProductIsError) {
       message.error('Продукт не был обновлён!')
     }
-   }, [updateProductSuccess]);
+  }, [updateProductSuccess]);
 
   const handleDeleteProduct = async (id: string) => {
     try {
@@ -97,12 +99,18 @@ export default function AllProducts(): JSX.Element {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {isLoading && (
-        <div>
-          <h1>Loading...</h1>
-        </div>
-      )}
+    <>
+      <div className="mb-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 md:gap-10 lg:gap-14">
+        {allProductsIsLoading && (
+          [...new Array(6)].map((_, i) => (
+            <div key={i} className={`border mt-8 grid grid-cols-3 border-gray-100`}>
+              <ProductSkeleton />
+            </div>
+          ))
+        )
+        }
+      </div>
+
       {(updateProductIsError && error !== undefined) &&
         (<h1 className="text-red-500 text-lg">
           {((error as any).status >= 400 && (error as any).status <= 499)
@@ -113,136 +121,145 @@ export default function AllProducts(): JSX.Element {
           }
         </h1>)}
 
-      {products.length > 0 &&
-        products.map((product) => (
-          <div key={product.id} className="border p-4 w-[270px]">
-            {updateProductId === product.id.toString() ? (
-              <form className="border-0 p-0" onSubmit={handleFormSubmit}>
-                <label className="block mb-2">
-                  Name
-                  <input
-                    className="border border-gray-300 p-2 w-full"
-                    id="name"
-                    required
-                    type="text"
-                    name="name"
-                    value={updatedProductData.name}
-                    onChange={handleInputChange}
-                    placeholder="Product Name"
-                  />
-                </label>
-                <label className="block mb-2">
-                  Price
-                  <input
-                    className="border border-gray-300 p-2 w-full"
-                    id="price"
-                    required
-                    type="number"
-                    name="price"
-                    value={updatedProductData.price}
-                    onChange={handleInputChange}
-                    placeholder="Price"
-                  />
-                </label>
-                <label className="block mb-2">
-                  Description
-                  <input
-                    className="border border-gray-300 p-2 w-full"
-                    id="description"
-                    required
-                    type="text"
-                    name="description"
-                    value={updatedProductData.description}
-                    onChange={handleInputChange}
-                    placeholder="Description"
-                  />
-                </label>
-                <label className="block mb-2">
-                  Img
-                  <input
-                    className="border border-gray-300 p-2 w-full"
-                    id="img"
-                    required={imgPreview.length === 0 ? true : false}
-                    type="file"
-                    name="img"
-                    onChange={handleInputChange}
-                    placeholder="Image URL"
-                    multiple
-                  />
-                  <ul className="flex">
-                    {imgPreview && imgPreview.map((preview: string, i: number) => (
-                      <li key={i} className={i >= 0 ? "mr-[-33.33%] w-[100%]" : ""} >
-                        <img src={preview} alt={`Uploaded`} style={{ maxWidth: "50px", maxHeight: "50px" }} />
-                      </li>
-                    ))}
-                  </ul>
+      <div className="grid grid-cols-1 justify-center gap-5 mb-10 mt-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+        {products.length > 0 &&
+          products.map((product: Product) => (
+            <div key={product.id} className="border rounded-md text-black dark:text-white dark:bg-[#2b2b2b] p-4 w-[265px]">
+              {updateProductId === product.id.toString() ? (
+                <form className="border-0 p-0 " onSubmit={handleFormSubmit}>
+                  <label className="block mb-2">
+                    Name
+                    <input
+                      className="rounded-md border border-gray-300 p-2 w-full"
+                      id="name"
+                      required
+                      type="text"
+                      name="name"
+                      value={updatedProductData.name}
+                      onChange={handleInputChange}
+                      placeholder="Product Name"
+                    />
+                  </label>
+                  <label className="block mb-2">
+                    Price
+                    <input
+                      className="rounded-md border border-gray-300 p-2 w-full"
+                      id="price"
+                      required
+                      type="number"
+                      name="price"
+                      value={updatedProductData.price}
+                      onChange={handleInputChange}
+                      placeholder="Price"
+                    />
+                  </label>
+                  <label className="block mb-2">
+                    Description
+                    <input
+                      className="rounded-md border border-gray-300 p-2 w-full"
+                      id="description"
+                      required
+                      type="text"
+                      name="description"
+                      value={updatedProductData.description}
+                      onChange={handleInputChange}
+                      placeholder="Description"
+                    />
+                  </label>
+                  <label className="block mb-2">
+                    Img
+                    <input
+                      className="rounded-md border border-gray-300 p-2 w-full"
+                      id="img"
+                      required={imgPreview.length === 0 ? true : false}
+                      type="file"
+                      name="img"
+                      onChange={handleInputChange}
+                      placeholder="Image URL"
+                      multiple
+                    />
+                    <ul className="flex">
+                      {imgPreview && imgPreview.map((preview: string, i: number) => (
+                        <li key={i} className={i >= 0 ? "mr-[-33.33%] w-[100%]" : ""} >
+                          <img src={preview} alt={`Uploaded`} style={{ maxWidth: "50px", maxHeight: "50px" }} />
+                        </li>
+                      ))}
+                    </ul>
 
-                </label>
-                <label className="block mb-2">
-                  Category
-                  <input
-                    className="border border-gray-300 p-2 w-full"
-                    id="category"
-                    required
-                    type="text"
-                    name="category"
-                    value={updatedProductData.category}
-                    onChange={handleInputChange}
-                    placeholder="Category"
-                  />
-                </label>
-                <div className="flex justify-between">
-                  <Button style={{ width: "45%" }} htmlType="submit">
-                    Save
-                  </Button>
-                  <Button
-                    style={{ width: "45%" }}
-                    htmlType="button"
-                    onClick={() => setUpdateProductId(null)}
-                  >
-                    Cancel
-                  </Button>
+                  </label>
+                  <label className="block mb-2">
+                    Category
+                    <input
+                      className="rounded-md border border-gray-300 p-2 w-full"
+                      id="category"
+                      required
+                      type="text"
+                      name="category"
+                      value={updatedProductData.category}
+                      onChange={handleInputChange}
+                      placeholder="Category"
+                    />
+                  </label>
+                  <div className="flex justify-center items-center gap-5 mt-4">
+                    <button
+                      className="border-2 border-gray-600 text-gray-600 dark:text-white hover:opacity-80 font-bold py-2 px-4 rounded-md"
+                      type="submit"
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="border-2 border-red-600 text-red-600 hover:opacity-80 font-bold py-2 px-4 rounded-md"
+                      type="button"
+                      onClick={() => setUpdateProductId(null)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <h1 className="mb-3 w-full text-2xl">{product.name}</h1>
+                  {product && product.img && product.img[0] && (
+                    <img
+                      draggable="false"
+                      className="w-48 h-48 object-cover"
+                      src={product.img[0]}
+                      alt={product.name}
+                    />
+                  )}
+
+                  <div className=" w-full">
+                    <Tag
+                      color="green"
+                      className="text-lg mb-2 mt-3"
+                    >
+                      Price: {product.price}
+                    </Tag>{" "}
+                  </div>
+
+                  <h1 className="mb-3 ">
+                    {product.description}
+                  </h1>
+                  <div className="flex justify-between gap-2">
+                    <button
+                      className="border border-red-500 text-red-500 px-4 py-2 rounded-md hover:opacity-80"
+                      onClick={() => handleDeleteProduct(product.id)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="border border-gray-500 px-4 py-2 rounded-md hover:opacity-80"
+                      onClick={() => handleUpdateProduct(product.id)}
+                    >
+                      Update
+                    </button>
+                  </div>
                 </div>
-              </form>
-            ) : (
-              <>
-                <Typography.Title level={3}>{product.name}</Typography.Title>
-                {product && product.img && product.img[0] && (
-                  <img
-                    draggable="false"
-                    className="w-48 h-48 object-cover"
-                    src={product.img[0]}
-                    alt={product.name}
-                  />
-                )}
-                <Tag
-                  color="green"
-                  className="text-lg mb-2"
-                >
-                  Price: {product.price}
-                </Tag>{" "}
-                <Typography.Paragraph>
-                  {product.description}
-                </Typography.Paragraph>
-                <div className="flex justify-between">
-                  <Button
-                    danger
-                    style={{ width: "45%" }}
-                    onClick={() => handleDeleteProduct(product.id)}
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    style={{ width: "45%" }}
-                    onClick={() => handleUpdateProduct(product.id)}
-                  >
-                    Update
-                  </Button>
-                </div>
-              </>
-            )}
-          </div>
-        ))}
-    </div>
+              )}
+            </div>
+          ))}
+      </div>
+    </>
+
   );
 }

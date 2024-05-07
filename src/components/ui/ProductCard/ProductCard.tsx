@@ -1,30 +1,26 @@
 "use client"
-import { Typography, Tag, Button } from "antd";
+import { Tag} from "antd";
 import { FaPlus } from "react-icons/fa6";
 import { TiMinus } from "react-icons/ti";
 import "./product_card.css";
 import { Product, ProductCardProps } from "../../../Types/types";
 import { BsCartDashFill } from "react-icons/bs";
-import { useEffect, useState } from "react";
-import ProductModal from "./ProductItemModal/ProductModal";
+import { useEffect } from "react";
 import { setCart } from "@/provider/redux";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/provider/redux/store";
 import { CartItem } from "@/Types/cart_types";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function ProductCard({
   product,
-  IsItemOnCard,
 }: ProductCardProps) {
+  const t = useTranslations("productCard");
+  const router = useRouter();
+
   const dispatch = useDispatch<AppDispatch>();
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const { cart: cartItems = [] } = useSelector((state: RootState) => state.filters);
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem("cart");
@@ -34,19 +30,14 @@ export default function ProductCard({
     }
   }, [dispatch]);
 
-  const saveCartToLocalStorage = (updatedCartData: CartItem[]) => {
-    localStorage.setItem("cart", JSON.stringify(updatedCartData));
-  };
-
-
   function AddToCart(product: Product) {
     const existingCartItem = cartItems.find((item: CartItem) => item.id === product.id);
-    
+
     if (!existingCartItem) {
-      const newCartItem: CartItem = { ...product, count: 1 }; 
-      const newCartItems = [...cartItems, newCartItem]; 
-      saveCartToLocalStorage(newCartItems);
-      dispatch(setCart(newCartItems)); 
+      const newCartItem: CartItem = { ...product, count: 1 };
+      const newCartItems = [...cartItems, newCartItem];
+      // localStorage.setItem("cart", JSON.stringify(newCartItems));
+      dispatch(setCart(newCartItems));
     }
   }
 
@@ -64,14 +55,19 @@ export default function ProductCard({
     dispatch(setCart(updatedCartData));
   };
 
-  const handleRemoveFromCart = (id: string) =>{
-    const updatedCart = cartItems.filter((item: CartItem) => item.id !== id);
-    dispatch(setCart(updatedCart)); 
+  function IsItemOnCard(id: string) {
+    return cartItems.find((item: Product) => item.id === id);
+  }
+  const handleCardClick = () => {
+    router.push(`/products/${product.id}`);
   }
 
   return (
     <>
-      <div className="w-[255px] h-[355px] pb-[10px] bg-white rounded-lg border border-gray-300 p-4 pt-6 mb-4 product-card" onClick={showModal}>
+      <div
+        className="w-[255px] h-[355px] pb-[10px] dark:bg-[#2b2b2b] bg-white rounded-lg border dark:border-gray-950 border-gray-300 p-4 pt-6 product-card"
+        onClick={handleCardClick}
+      >
         <div className="flex justify-center mb-4">
           {product && product.img && product.img[0] && (
             <img
@@ -85,7 +81,7 @@ export default function ProductCard({
         <div className="flex flex-col h-[103px] justify-between">
           <h1 className="mb-0 text-[24px] font-semibold">{product.name}</h1>
           <div className="flex justify-between items-center">
-            <Tag className="text-sm text-[green]">Price: {product.price}</Tag>
+            <Tag className="text-[16px] dark:border-gray-600 dark:bg-[#1c1a1a] text-[green]">{t("price")}: {product.price}</Tag>
             <div onClick={(e) => {
               e.stopPropagation();
             }}>
@@ -95,7 +91,7 @@ export default function ProductCard({
                   <button className="border-0 p-0" onClick={() => cartItemCount(product.id, 'decr')}>
                     <TiMinus className="fill-[red] hover:opacity-80 w-[20px] h-[20px]" />
                   </button>
-                  <h1 className="text-[1.2rem] text-[black]">
+                  <h1 className="text-[1.2rem] text-black dark:text-white">
                     {IsItemOnCard(product.id) &&
                       (cartItems.find((item: Product) => item.id === product.id) as CartItem)?.count
                     }
@@ -105,20 +101,19 @@ export default function ProductCard({
                   </button>
                 </div>
               ) : (
-                <Button
+                <button
                   title="Добавить в корзину"
-                  className="text-sm p-t-[5px] p-b-[5px] w-[120px] border-red-700 flex items-center justify-center"
+                  className="text-sm p-[5px] rounded-md w-[110px] border-2 border-red-700 hover:opacity-80 flex gap-1 items-center justify-center"
                   style={{ color: IsItemOnCard(product.id) ? "green" : "red" }}
                   onClick={() => AddToCart(product)}
                 >
-                  Добавить <BsCartDashFill style={{ width: 20, height: 20 }} />
-                </Button>
+                  {t("add")} {' '} <BsCartDashFill style={{ width: 20, height: 20 }} />
+                </button>
               )}
             </div>
           </div>
         </div>
       </div>
-      <ProductModal handleRemoveFromCart={handleRemoveFromCart} AddToCart={AddToCart} IsItemOnCard={IsItemOnCard} product={product} isModalVisible={isModalVisible} handleCancel={handleCancel} />
     </>
   );
 }

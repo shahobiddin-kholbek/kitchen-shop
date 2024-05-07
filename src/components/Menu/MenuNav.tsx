@@ -1,7 +1,8 @@
 "use client"
+import { useTranslations } from "next-intl";
 import "./menu_nav.css";
 import Link from "next/link";
-import { usePathname } from 'next/navigation'
+import { usePathname } from '@/navigation';
 
 interface MenuItem {
   label: string;
@@ -9,17 +10,22 @@ interface MenuItem {
 }
 
 export default function MenuNav() {
-  const pathname = usePathname()
+  const t = useTranslations("MenuNav");
+  const pathname = usePathname();
 
   const items: MenuItem[] = [
     {
-      label: "Home",
+      label: t(""),
       path: "/",
     },
     {
-      label: "Admin",
-      path: "/admin",
+      label: t("products"),
+      path: "/products",
     },
+    // {
+    //   label: t("Admin"),
+    //   path: "/admin",
+    // },
   ];
 
   return (
@@ -27,8 +33,13 @@ export default function MenuNav() {
       <ul>
         {items.map((item, i) => (
           <li key={i}>
-            <Link scroll={false} href={item.path} className={pathname === item.path ? "linkActive" : "linkNonActive"}>
-              {item.label}
+            <Link scroll={false} href={item.path}
+              className={pathname === item.path ? 
+                "text-orange-500 font-extrabold dark:text-orange-800 " : 
+                "text-black dark:text-white" 
+              }
+              >
+              <span className="text-[1.2rem] font-semibold">{item.label}</span>
             </Link>
           </li>
         ))}
@@ -36,3 +47,4 @@ export default function MenuNav() {
     </nav>
   );
 }
+

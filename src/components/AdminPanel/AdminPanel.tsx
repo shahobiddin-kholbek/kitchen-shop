@@ -1,35 +1,36 @@
 "use client"
-import { Tabs } from "antd";
-import AddProduct from "./AddProduct.jsx/AddProduct";
-import { TabItem } from "@/Types/types";
-import AllProducts from "./AllProducts.jsx/AllProducts";
+import { useEffect, useState } from "react";
+import './adminPanel.css'
+import { useRouter } from 'next/navigation';
+import AuthAdmin from "./auth/Auth";
 
 export default function AdminPanel() {
-  const savedActiveTab = typeof window !== 'undefined' ? localStorage.getItem('activeTab') || '1' : '1';
-  
-  const onChange = (key: string) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("activeTab", key);
-    }
-  };
+  const [admin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  const items: TabItem[] = [
-    {
-      key: "1",
-      label: "Add",
-      children: <AddProduct />,
-    },
-    {
-      key: "2",
-      label: "All Products",
-      children: <AllProducts />,
-    },
-  ];
+  useEffect(() => {
+    const storedAdmin = localStorage.getItem('admin');
+    if (storedAdmin) {
+      setIsAdmin(true);
+      router.push('/admin-page');
+    } else {
+      setIsAdmin(false);
+      router.push('/admin/');
+    }
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return null; 
+  }
 
   return (
     <section className="flex justify-center">
-      <Tabs defaultActiveKey={savedActiveTab} centered items={items} onChange={onChange} />
+      {!admin && (
+        <AuthAdmin/>
+      )}
+      
     </section>
   );
 }
-

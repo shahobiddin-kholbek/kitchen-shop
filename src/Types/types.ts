@@ -82,13 +82,13 @@ export interface AddOrderArgs {
 
 export interface ProductCardProps {
   product: Product;
-  IsItemOnCard: (id: string) => any | undefined;
+  // IsItemOnCard: (id: string) => any | undefined;
 }
 
 export interface ProductModalProps {
   product: Product;
-  isModalVisible: boolean;
-  handleCancel: () => void;
+  // isModalVisible: boolean;
+  // handleCancel: () => void;
   AddToCart: (product: Product) => void
   IsItemOnCard: (id: string) => CartItem | undefined
   handleRemoveFromCart: (productId: string) => void;

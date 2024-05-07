@@ -1,0 +1,44 @@
+.formAddProduct {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  label {
+    font-weight: bold;
+ 
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      word-break: break-all;
+    }
+
+    span {
+      font-size: 14px;
+    }
+
+  }
+
+  input[type="submit"],
+  .addButton {
+    color: orange;
+    border-color: orange;
+  }
+
+  input[htmlType="submit"]:hover,
+  .ant-btn-default:hover {
+    color: rgb(11, 200, 11) !important;
+    border-color: green !important;
+  }
+
+
+}

@@ -1,0 +1,73 @@
+{
+  "Index": {
+    "loading": "Загрузка...",
+    "notProducts": "Нет продуктов",
+    "seeAll": "Посмотреть все"
+  },
+  "langSwitcher": {
+    "ru": "RU"
+  },
+  "MenuNav": {
+    "": "Главная",
+    "products": "Продукты"
+  },
+  "sidebar": {
+    "price": "Цена",
+    "from": "от",
+    "to": "до",
+    "category": "Категория",
+    "categoryOptions": {
+      "all": "Все",
+      "chairs": "Стулья",
+      "tables": "Столы",
+      "knives": "Ножи",
+      "spoons": "Ложки",
+      "teapots": "Чайники"
+    },
+    "sorting": "Сортировка",
+    "sortingOptions": {
+      "default": "По умолчанию",
+      "asc": "По возрастанию",
+      "desc": "По убыванию"
+    }
+  },
+  "productsPage": {
+    "search": "Поиск..."
+  },
+  "productCard": {
+    "price": "Цена",
+    "notFound": "Такой продукт не существует",
+    "addToCart": "В корзину",
+    "category": "Категория",
+    "description": "Описание",
+    "removeFromCart": "Удалить с корзины",
+    "add": "В"
+  },
+  "signInForm": {
+    "title": "Форма входа",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "submitButton": "Вход"
+  },
+  "signUpForm": {
+    "title": "Форма Регистрации",
+    "name": "Имя",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "phone": "Телефон",
+    "submitButton": "Зарегистрироваться"
+  },
+  "cart": {
+    "title": "Корзина",
+    "empty": "Корзина пуста",
+    "totalPrice": "Общая сумма",
+    "totalProductPrice": "Общая сумма продуктa",
+    "count": "Количество",
+    "remove": "Удалить",
+    "order": "Заказать",
+    "orderSuccess": "Заказ успешно выполнен",
+    "orderError": "Ошибка при заказе! Повторите позже",
+    "backToProducts": "Вернуться к продуктам"
+  }
+}

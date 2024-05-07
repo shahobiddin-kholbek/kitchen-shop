@@ -1,10 +1,11 @@
+"use client"
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useAddProductMutation } from "@/provider/redux/apies/productsApi";
 import FormCP from "../../ui/Form/FormCP";
 import { Product, Errors } from "@/Types/types";
 import { v4 as uuidv4 } from 'uuid';
 import { message } from 'antd';
-import '../../ui/Form/form_ui.css';
+import { useSelector } from "react-redux";
 
 export default function AddProduct(): JSX.Element {
   const [addProduct, { isError, error, isSuccess, isLoading }] = useAddProductMutation();
@@ -17,6 +18,8 @@ export default function AddProduct(): JSX.Element {
     img: [],
     category: "",
   });
+
+  const {admin} = useSelector((state: any) => state.filters)
 
   const [errors, setErrors] = useState<Errors>({
     name: "",

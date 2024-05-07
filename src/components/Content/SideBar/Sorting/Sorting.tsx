@@ -3,24 +3,24 @@ import { setSortByPrice } from "@/provider/redux";
 import { Cascader } from "antd";
 import React from "react";
 import { CascaderOption } from "@/Types/types";
-
-
+import { useTranslations } from "next-intl";
 
 const Sorting: React.FC = () => {
+  const t = useTranslations("sidebar");
   const dispatch = useDispatch();
 
   const sortOptions: CascaderOption[] = [
     {
       value: "",
-      label: "По умолчанию...",
+      label: t("sortingOptions.default"),
     },
     {
       value: "DESC",
-      label: "По возрастанию",
+      label: t("sortingOptions.asc"),
     },
     {
       value: "ASC",
-      label: "По убыванию",
+      label: t("sortingOptions.desc"),
     },
   ];
 
@@ -30,10 +30,10 @@ const Sorting: React.FC = () => {
 
   return (
     <>
-      <h1>Сортировка</h1>
+      <h1>{t("sorting")}</h1>
       <Cascader
         options={sortOptions}
-        defaultValue={["По умолчанию..."]}
+        defaultValue={[t("sortingOptions.default")]}
         onChange={onChangeSort}
       />{" "}
     </>

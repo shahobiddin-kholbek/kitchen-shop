@@ -1,23 +1,16 @@
 import { ProductModalProps } from '@/Types/types';
-import { Modal, Tag, Typography, Carousel, Button } from 'antd';
+import { Tag, Typography, Carousel, Button } from 'antd';
 import React, { useState } from 'react';
 import './product_item_modal.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { Rate } from "antd";
+import { useTranslations } from 'next-intl';
 
-export default function ProductModal({ AddToCart, product, isModalVisible, handleCancel, IsItemOnCard, handleRemoveFromCart }: ProductModalProps) {
+export default function ProductModal({ AddToCart, product, IsItemOnCard, handleRemoveFromCart }: ProductModalProps) {
+    const t = useTranslations("productCard")
     const [currentSlide, setCurrentSlide] = useState(0);
-
     const onChange = (currentSlide: number) => {
         setCurrentSlide(currentSlide);
-    };
-
-    const contentStyle: React.CSSProperties = {
-        margin: 0,
-        height: '160px',
-        color: '#fff',
-        lineHeight: '160px',
-        textAlign: 'center',
-        background: '#364d79',
     };
 
     const Arrow = ({ type, onClick }: { type: 'left' | 'right', onClick: () => void }) => {
@@ -30,46 +23,43 @@ export default function ProductModal({ AddToCart, product, isModalVisible, handl
         );
     };
 
+    const rating = Number(product.rating)
+
     return (
-        <Modal
-            title={product.name}
-            open={isModalVisible}
-            onCancel={handleCancel}
-            footer={null}
-            centered={true}
-        >
-            <div className="product-modal-content">
-                <Carousel
-                    arrows
-                    prevArrow={<Arrow type="left" onClick={() => setCurrentSlide(currentSlide - 1)} />}
-                    nextArrow={<Arrow type="right" onClick={() => setCurrentSlide(currentSlide + 1)} />}
-                    afterChange={onChange}>
-                    {product.img.map((imgSrc, index) => (
-                        <div key={index} style={contentStyle}>
-                            <img
-                                draggable="false"
-                                className="product-modal-image"
-                                src={imgSrc}
-                                alt={product.name}
-                            />
-                        </div>
-                    ))}
-                </Carousel>
-                <div className="product-modal-info">
-                    <Tag className="text-sm text-[green]">Цена: {product.price}$</Tag>
-                    <Typography.Text className="product-modal-category">Категория: {product.category}</Typography.Text>
-                    {IsItemOnCard(product.id) ? ( // Проверяем, есть ли продукт в корзине
-                        <Button
-                            style={{ color: "red", width: '103px' }}
-                            onClick={() => handleRemoveFromCart(product.id)}>Remove</Button>
-                    ) : (
-                        <Button
-                            style={{ color: "green", width: '103px' }}
-                            onClick={() => AddToCart(product)}>Add to Cart</Button>
-                    )}
-                </div>
-                <Typography.Paragraph className="product-modal-description">Описание: {product.description}</Typography.Paragraph>
+        <div className="product-modal-content  h-[60vh] mb-10">
+            <Carousel
+                arrows
+                prevArrow={<Arrow type="left" onClick={() => setCurrentSlide(currentSlide - 1)} />}
+                nextArrow={<Arrow type="right" onClick={() => setCurrentSlide(currentSlide + 1)} />}
+                afterChange={onChange}>
+                {product.img.map((imgSrc, index) => (
+                    <div key={index}>
+                        <img
+                            draggable="false"
+                            className="product-modal-image"
+                            src={imgSrc}
+                            alt={product.name}
+                        />
+                    </div>
+                ))}
+            </Carousel>
+            <div className="product-modal-info">
+                <Typography.Title level={3} className="product-modal-title dark:text-white">{product.name}</Typography.Title>
+                <Tag className="text-[20px] p-[5px] text-[green] w-[150px]">{t("price")}: {product.price}$</Tag>
+                <Rate disabled defaultValue={rating} />
+                <Typography.Text className="dark:text-white">{t("category")}: {product.category}</Typography.Text>
+                <Typography.Paragraph className="product-modal-description dark:text-white">{t("description")}: {product.description}</Typography.Paragraph>
+                {IsItemOnCard(product.id) ? (
+                    <button
+                        className='text-white bg-[red] w-[203px] p-[5px] rounded-md hover:opacity-80'
+                        onClick={() => handleRemoveFromCart(product.id)}>{t("removeFromCart")}</button>
+                ) : (
+                    <button
+                        className='text-white bg-[green] w-[203px] p-[5px] rounded-md hover:opacity-80'
+                        onClick={() => AddToCart(product)}>{t("addToCart")}
+                    </button>
+                )}
             </div>
-        </Modal>
+        </div>
     )
 }

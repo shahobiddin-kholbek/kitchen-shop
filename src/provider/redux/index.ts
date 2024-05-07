@@ -1,10 +1,13 @@
 import { CartItem } from "@/Types/cart_types";
 import { FiltersState } from "@/Types/redux_types";
+import { Product } from "@/Types/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 const initialState: FiltersState = {
   cart: [],
+  user: {},
+  admin: {},
   category: "",
   sortByPrice: "",
   searchValue: "",
@@ -19,6 +22,13 @@ const filterSlice = createSlice({
     setCart(state, action: PayloadAction<CartItem[]>) {
       state.cart = action.payload;
       localStorage.setItem("cart", JSON.stringify(action.payload));
+    },
+    setUser(state, action: PayloadAction<any>) {
+      state.user = action.payload;
+    },
+    setAdminData(state, action: PayloadAction<any>) {
+      state.admin = action.payload;
+      localStorage.setItem("admin", JSON.stringify(action.payload));
     },
     setCategory(state, action: PayloadAction<string>) {
       state.category = action.payload;
@@ -45,7 +55,9 @@ export const {
   setMaxPrice,
   setSortByPrice,
   setSearchValue,
-  setCart
+  setCart,
+  setUser,
+  setAdminData,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

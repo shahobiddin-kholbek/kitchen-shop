@@ -9,18 +9,3 @@
     gap: 10px;
 }
 
-#linkStyles{
-    font-size: 1.2rem;
-    &:hover{
-        color: red;
-    }
-}
-
-.linkActive{
-    color: orange;
-    
-}
-
-.linkNonActive{
-    color: black;
-}

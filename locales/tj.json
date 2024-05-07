@@ -1,0 +1,74 @@
+{
+  "Index": {
+    "loading": "Боргузории...",
+    "notProducts": "Маҳсулотҳо мавҷуд нест",
+    "seeAll": "Ҳамаи маҳсулотҳо"
+  },
+  "langSwitcher": {
+    "tj": "ТҶ"
+  },
+
+  "MenuNav": {
+    "": "Асосӣ",
+    "products": "Маҳсулотҳо"
+  },
+  "sidebar": {
+    "price": "Нақд",
+    "from": "аз",
+    "to": "то",
+    "category": "Категория",
+    "categoryOptions": {
+      "all": "Ҳама",
+      "chairs": "Курсиҳо",
+      "tables": "Мизҳо",
+      "knives": "Кордҳо",
+      "spoons": "Қошуқҳо",
+      "teapots": "Чойникҳо"
+    },
+    "sorting": "Тартиб",
+    "sortingOptions": {
+      "default": "Стандартӣ",
+      "asc": "Зиёд ба паст",
+      "desc": "Зиёд ба боло"
+    }
+  },
+  "productsPage": {
+    "search": "Ҷустуҷӯ..."
+  },
+  "productCard": {
+    "price": "Нақд",
+    "notFound": "Маҳсулот ёфт нашуд",
+    "category": "Категория",
+    "description": "Тавсиф",
+    "addToCart": "Ба сабад",
+    "removeFromCart": "Аз сабад",
+    "add": "Ба"
+  },
+  "signInForm": {
+    "title": "Формаи вуруд",
+    "email": "Почтаи электронӣ",
+    "password": "Рамз",
+    "submitButton": "Вуруд"
+  },
+  "signUpForm": {
+    "title": "Формаи номнависӣ",
+    "name": "Ном",
+    "email": "Почтаи электронӣ",
+    "password": "Рамз",
+    "confirmPassword": "Рамзро тасдиқ кунед",
+    "phone": "Телефон",
+    "submitButton": "Номнавис шудан"
+  },
+  "cart": {
+    "title": "Сабат",
+    "empty": "Сабат холӣ аст",
+    "totalPrice": "Арзиши умумӣ",
+    "totalProductPrice": "Арзиши умумии маҳсулот",
+    "count": "Миқдор",
+    "remove": "Ҳазф",
+    "order": "Фармоиш",
+    "orderSuccess": "Фармоиш бо муваффақият анҷом ёфт",
+    "orderError": "Иштибоҳ дар фармоиш! Баъдтар такрор кунед",
+    "backToProducts": "Баргаштан ба саҳифаи маҳсулотҳо"
+}
+}

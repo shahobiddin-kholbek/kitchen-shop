@@ -1,6 +1,7 @@
 'use client'
 import { Button } from "antd";
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import styles from '../../ui/Form/form_ui.module.scss';
 
 interface Product {
   name: string;
@@ -49,7 +50,10 @@ const FormCP: React.FC<Props> = ({ handleAddProduct, product, handleChange, erro
 
   const handleImgChange = (e: any) => {
     const files = e.target.files;
+    console.log(typeof files);
+    
     if (files) {
+      
       const imgPreviewArray: string[] = [];
       const imgDataArray: string[] = [];
 
@@ -73,7 +77,7 @@ const FormCP: React.FC<Props> = ({ handleAddProduct, product, handleChange, erro
   };
 
   return (
-    <form className="w-[350px]" onSubmit={handleAddProduct}>
+    <form className={`${styles.formAddProduct} dark:text-white w-[350px]`} onSubmit={handleAddProduct}>
       <label htmlFor="name">
         Name:{" "}
         <input
@@ -163,9 +167,9 @@ const FormCP: React.FC<Props> = ({ handleAddProduct, product, handleChange, erro
           <br />
         </label>
       )}
-      <Button className="addButton" htmlType="submit">
+      <button className="border-2 hover:opacity-80 font-bold py-2 px-4 rounded" type="submit">
         Add
-      </Button>{" "}
+      </button>{" "}
     </form>
   );
 }

@@ -3,48 +3,52 @@ import { useDispatch } from "react-redux";
 import { setCategory } from "@/provider/redux";
 import { CascaderOption } from "@/Types/types";
 import { AppDispatch } from "@/provider/redux/store";
+import { useTranslations } from "next-intl";
 
 export default function CategoryFilter() {
+  const t = useTranslations("sidebar");
   const dispatch = useDispatch<AppDispatch>();
 
   const categoryOptions: CascaderOption[] = [
     {
       value: "",
-      label: "Все",
+      label: t('categoryOptions.all'),
     },
     {
       value: "Стуля",
-      label: "Стуля",
+      label: t('categoryOptions.chairs'),
     },
     {
       value: "Ножи",
-      label: "Ножи",
+      label: t('categoryOptions.knives'),
     },
     {
       value: "Столы",
-      label: "Столы",
+      label: t('categoryOptions.tables'),
     },
     {
       value: "Ложки",
-      label: "Ложки",
+      label: t('categoryOptions.spoons'),
     },
     {
       value: "Чайники",
-      label: "Чайники",
+      label: t('categoryOptions.teapots'),
     },
   ];
 
-  const onChangeCategory = (value: any) => {
+  const onChangeCategory: (value: object) => void = (value: any) => {
     dispatch(setCategory(value[0]));
+    
   };
   return (
     <>
-      <h1>Категории</h1>
+      <h1>{t("category")}</h1>
       <Cascader
         options={categoryOptions}
-        defaultValue={["Все"]}
+        defaultValue={[t('categoryOptions.all')]}
         onChange={onChangeCategory}
-      />
+        style={{ colorScheme: 'dark' ? "#2d3748" : "color-black bg-white" }}
+        />
     </>
   );
 }
